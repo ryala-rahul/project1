@@ -1,0 +1,55 @@
+---
+- hosts: webserver
+  remote_user: ansible
+  become: yes
+  tasks:
+  - name: installing tomcat CentOS
+    package:
+      name: tomcat
+      state: present
+    when:  ansible_facts['os_family'] == "RedHat"
+  - name: installing tomcat Ubuntu
+    package:
+      name: tomcat9
+      state: present
+    when:  ansible_facts['os_family'] == "Debian"
+  - name: starting tomcat CentOS
+    service:
+      name: tomcat
+      state: started
+    when:  ansible_facts['os_family'] == "RedHat"
+  - name: starting tomcat Ubuntu
+    service:
+      name: tomcat9
+      state: started
+    when:  ansible_facts['os_family'] == "Debian"
+  - name: starting up tomcat CentOS 
+    service:
+      name: tomcat
+      state: restarted
+    when:  ansible_facts['os_family'] == "RedHat"
+  - name: starting tomcat Ubuntu
+    service:
+      name: tomcat9
+      state: restarted
+    when:  ansible_facts['os_family'] == "Debian"
+  - name: copying addressbook file CentOS
+    copy:
+      src: /root/jenkins/workspace/mavenproj/addressbook_main/target/addressbook.war
+      dest: /usr/share/tomcat/webapps
+    when:  ansible_facts['os_family'] == "RedHat"
+  - name: copying addressbook file Ubuntu
+    copy:
+      src: /root/jenkins/workspace/mavenproj/addressbook_main/target/addressbook.war
+      dest: /home/ansible/var/lib/tomcat9/webapps
+    when:  ansible_facts['os_family'] == "Debian"
+  - name: starting up tomcat CentOS 
+    service:
+      name: tomcat
+      state: restarted
+    when:  ansible_facts['os_family'] == "RedHat"
+  - name: starting tomcat Ubuntu
+    service:
+      name: tomcat9
+      state: restarted
+    when:  ansible_facts['os_family'] == "Debian"
