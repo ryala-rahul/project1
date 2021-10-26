@@ -41,7 +41,7 @@
   - name: copying addressbook file Ubuntu
     copy:
       src: /home/ansible/jenkins/workspace/samplemaven/addressbook_main/target/addressbook.war
-      dest: /home/ansible/var/lib/tomcat9/webapps
+      dest: /var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
     service:
