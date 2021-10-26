@@ -1,6 +1,6 @@
 ---
 - hosts: webserver
-  remote_user: root
+  remote_user: ansible
   become: yes
   tasks:
   - name: installing tomcat CentOS
@@ -40,7 +40,7 @@
     when:  ansible_facts['os_family'] == "RedHat"
   - name: copying addressbook file Ubuntu
     copy:
-      src: /home/ansible/jenkins/workspace/mavenproj/addressbook_main/target/addressbook.war
+      src: /home/ansible/jenkins/workspace/samplemaven/addressbook_main/target/addressbook.war
       dest: /home/ansible/var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
