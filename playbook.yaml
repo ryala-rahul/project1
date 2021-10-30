@@ -3,6 +3,14 @@
   remote_user: ansible
   become: yes
   tasks:
+  - name: Creates directory
+    file:
+      path: /home/ansible/newgit
+      state: directory
+  - name: checkout git repo
+    ansible.builtin.git:
+      repo: https://github.com/ryala-rahul/War-Repo.git
+      dest: /home/ansible/newgit
   - name: installing tomcat CentOS
     package:
       name: tomcat
@@ -35,12 +43,12 @@
     when:  ansible_facts['os_family'] == "Debian"
   - name: copying addressbook file CentOS
     copy:
-      src: /root/jenkins/workspace/mavenproj/addressbook_main/target/addressbook.war
+      src: /home/ansible/newgit/addressbook.war
       dest: /usr/share/tomcat/webapps
     when:  ansible_facts['os_family'] == "RedHat"
   - name: copying addressbook file Ubuntu
     copy:
-      src: /home/ansible/jenkins/workspace/samplemaven/addressbook_main/target/addressbook.war
+      src: /home/ansible/newgit/addressbook.war
       dest: /var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
